@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    [SerializeField] GameObject thrash;
-    [SerializeField] Vector3 projectile;
-    [SerializeField] private float throwWaitMax = 2f;
-    private Stack<GameObject> collectedThrashes;
-    private float throwWait = 0f;
+    [SerializeField] GameObject trash;
+    [SerializeField] float throwWaitMax = 2f;
+    Stack<GameObject> collectedThrashes;
+    float throwWait = 0f;
+    Ray ray;
+    RaycastHit hit;
+    Camera cam;
+    
 
 
     void Start()
     {
+        cam = Camera.main;
         collectedThrashes = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().CollectedThrashes;
     }
 
@@ -20,18 +24,41 @@ public class Fire : MonoBehaviour
     {
         throwWait += Time.deltaTime;
 
-        if()
+        if(collectedThrashes.Count == 0)
         {
-
+            return;
         }
 
-        if(throwWait > throwWaitMax)
+        if(!Input.GetMouseButtonDown(0))
         {
+            return;
+        }
+
+        ray = cam.ScreenPointToRay(Input.mousePosition);
+        if(throwWait > throwWaitMax && Physics.Raycast(ray, out hit))
+        {        
+            collectedThrashes.Pop();
             throwWait = 0;
-            GameObject firlat = Instantiate(thrash, transform.position, Quaternion.identity);
-            Rigidbody rb = firlat.GetComponent<Rigidbody>();
-            rb.AddForce( projectile, ForceMode.Impulse);
-
+            GameObject firlat = Instantiate(trash, transform.position, Quaternion.identity);
+            ShootWithGravity(firlat, hit.point);
         }
+    }
+
+    void ShootWithGravity(GameObject gObj, Vector3 point)
+    {
+        Vector3 distance = point - transform.position;
+        float xSign = distance.x/Mathf.Abs(distance.x);
+        float zSign = distance.z / Mathf.Abs(distance.z);
+        float xx = distance.x * distance.x;
+        float zz = distance.z * distance.z;
+        float totalMagForXZ = xx + zz;
+        float mag = new Vector2(distance.x, distance.z).magnitude;
+        float newMag = mag * -Physics.gravity.y / 2;
+        float yMag = Mathf.Sqrt(newMag);
+        float xMag = Mathf.Sqrt(newMag*xx/totalMagForXZ);
+        float zMag = Mathf.Sqrt(newMag * zz / totalMagForXZ);
+
+        gObj.GetComponent<Rigidbody>().velocity = new Vector3(xSign*xMag,yMag, zSign* zMag);
+
     }
 }

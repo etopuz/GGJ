@@ -800,9 +800,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c652f26922926b43a898cd74c5c8b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrash: {fileID: 7556622834363247013, guid: ba93a115d3b334f4ebdf38fbefe62d88, type: 3}
-  projectile: {x: 0, y: 0, z: 0}
-  throwWaitMax: 2
+  trash: {fileID: 7556622834363247013, guid: ba93a115d3b334f4ebdf38fbefe62d88, type: 3}
+  throwWaitMax: 0.5
 --- !u!1 &1150373247
 GameObject:
   m_ObjectHideFlags: 0
