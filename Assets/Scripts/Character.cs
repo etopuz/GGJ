@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public float playerSpeed;
+    [SerializeField] float playerSpeed = 10f;
+    [SerializeField] float trashMagnetSpeed = 10f;
+    [SerializeField] float closeEnough = 1f;
+    private Stack<GameObject> collectedThrashes = new Stack<GameObject>();
     private Rigidbody rb;
     private Vector2 playerDirection;
 
@@ -23,6 +26,18 @@ public class Character : MonoBehaviour
     void FixedUpdate() 
     {
         rb.velocity = new Vector3(playerDirection.x * playerSpeed , 0,playerDirection.y * playerSpeed);
-        //Debug.Log(rb.velocity);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent<Collectable>(out Collectable c))
+        {
+            other.transform.position = Vector3.MoveTowards(other.transform.position, transform.position, trashMagnetSpeed * Time.deltaTime);
+            if((transform.position - other.transform.position).sqrMagnitude < closeEnough)
+            {
+                collectedThrashes.Push(other.gameObject);
+                Destroy(other.gameObject);
+            }
+        }
     }
 }
