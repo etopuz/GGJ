@@ -7,9 +7,16 @@ public class Character : MonoBehaviour
     [SerializeField] float playerSpeed = 10f;
     [SerializeField] float trashMagnetSpeed = 10f;
     [SerializeField] float closeEnough = 1f;
+
     private Stack<GameObject> collectedThrashes = new Stack<GameObject>();
     private Rigidbody rb;
     private Vector2 playerDirection;
+
+    public Stack<GameObject> CollectedThrashes
+    {
+        get => collectedThrashes;
+        set => collectedThrashes = value;
+    }
 
     void Start()
     {
@@ -30,14 +37,17 @@ public class Character : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent<Collectable>(out Collectable c))
+        if (!other.TryGetComponent<Collectable>(out Collectable c))
         {
-            other.transform.position = Vector3.MoveTowards(other.transform.position, transform.position, trashMagnetSpeed * Time.deltaTime);
-            if((transform.position - other.transform.position).sqrMagnitude < closeEnough)
-            {
-                collectedThrashes.Push(other.gameObject);
-                Destroy(other.gameObject);
-            }
+            return;
         }
+        
+        other.transform.position = Vector3.MoveTowards(other.transform.position, transform.position, trashMagnetSpeed * Time.deltaTime);
+
+        if((transform.position - other.transform.position).sqrMagnitude < closeEnough)
+        {
+            collectedThrashes.Push(other.gameObject);
+            Destroy(other.gameObject);
+        }        
     }
 }
