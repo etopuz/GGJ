@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - zemin
+  - duvar
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - zemin
   - Water
   - UI
   - 
