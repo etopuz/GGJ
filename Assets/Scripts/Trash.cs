@@ -80,6 +80,7 @@ public class Trash : MonoBehaviour
             }
             else
             {
+                Destroy(gameObject);
                 //SENİN CANIN AZALSIN
                 character.Health -= 10;
             }
