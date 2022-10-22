@@ -14,6 +14,7 @@ public class Trash : MonoBehaviour
 
     [SerializeField] TrashType tt;
     static float maxWaitTime = 5f;
+    static float poisonPerSecond = 2f;
     
     static GameObject poisonousArea;
     static Character character;
@@ -90,6 +91,7 @@ public class Trash : MonoBehaviour
         waitTime+= Time.deltaTime;
         if(canMakePoisonousArea&& waitTime > maxWaitTime)
         {
+            character.Health -= poisonPerSecond/50;
             canMakePoisonousArea = false;
             waitTime = 0;
             Instantiate(poisonousArea,  new Vector3(transform.position.x, 0.01f, transform.position.z) ,poisonousArea.transform.rotation);

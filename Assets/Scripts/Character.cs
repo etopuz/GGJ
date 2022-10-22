@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Character : MonoBehaviour
 {
     [SerializeField] float playerSpeed = 10f;
+    public float maxSinir = 7f;
     [SerializeField] float trashMagnetSpeed = 10f;
     [SerializeField] float closeEnough = 1f;
     [SerializeField] float health = 100f;
@@ -40,7 +41,7 @@ public class Character : MonoBehaviour
         }
         float directionX = Input.GetAxisRaw("Horizontal");
         float directionY = Input.GetAxisRaw("Vertical");
-        playerDirection = new Vector2(directionX,directionY).normalized;
+        playerDirection = new Vector2(directionX,directionY);
 
         if(collectedThrashes.TryPeek(out GameObject gObj))
         {
@@ -73,6 +74,26 @@ public class Character : MonoBehaviour
 
     void FixedUpdate() 
     {
+        var pos = transform.position;
+        if(pos.x > maxSinir && playerDirection.x>0)
+        {
+            playerDirection -= new Vector2(playerDirection.x,0);
+        }
+        if (pos.x < -maxSinir && playerDirection.x < 0)
+        {
+            playerDirection -= new Vector2(playerDirection.x, 0);
+        }
+        if (pos.z > maxSinir && playerDirection.y > 0)
+        {
+            playerDirection -= new Vector2(0,playerDirection.y);
+        }
+        if (pos.z < -maxSinir && playerDirection.y < 0)
+        {
+            playerDirection -= new Vector2(0, playerDirection.y);
+        }
+
+
+        playerDirection = playerDirection.normalized;
         rb.velocity = new Vector3(playerDirection.x * playerSpeed , 0,playerDirection.y * playerSpeed);
     }
 

@@ -6,6 +6,7 @@ public class ParabolicFire : MonoBehaviour
 {
     GameObject[] trashes;
     [SerializeField] float throwWaitMax = 2f;
+    float maxSinir = 7f;
     float throwWait = 0f;
     Ray ray;
     RaycastHit hit;
@@ -28,6 +29,7 @@ public class ParabolicFire : MonoBehaviour
 
     void Start()
     {
+        maxSinir = GameObject.FindObjectOfType<Character>().maxSinir;
         cam = Camera.main;
         if (TryGetComponent<Character>(out Character c))
         {
@@ -58,7 +60,7 @@ public class ParabolicFire : MonoBehaviour
             throwWait = 0;
             GameObject firlat = Instantiate(trash, transform.position, trash.transform.rotation);
             firlat.GetComponent<Trash>().IsGatherable = false;
-            Shoot(firlat, new Vector3(Random.Range(-20f, 20f), 0, Random.Range(-20f, 20f)));
+            Shoot(firlat, new Vector3(Random.Range(-maxSinir, maxSinir), 0, Random.Range(-maxSinir, maxSinir)));
         }
 
     }
