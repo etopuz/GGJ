@@ -47,8 +47,9 @@ public class Character : MonoBehaviour
         if((transform.position - other.transform.position).sqrMagnitude < closeEnough)
         {
             other.GetComponent<Trash>().IsGatherable = false;
+            other.GetComponent<Trash>().IsStopable = false;
             collectedThrashes.Push(other.gameObject);
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);  
         }        
     }
 }

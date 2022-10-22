@@ -13,12 +13,19 @@ public class Trash : MonoBehaviour
     }
 
     [SerializeField] TrashType tt;
-    bool isGatherable = true;
+    public bool isGatherable = true;
+    public bool isStopable = true;
 
     public bool IsGatherable
     {
         get=> isGatherable;
         set=> isGatherable = value;
+    }
+
+    public bool IsStopable
+    {
+        get => isStopable;
+        set => isStopable = value;
     }
 
     public TrashType TType
@@ -28,9 +35,11 @@ public class Trash : MonoBehaviour
 
     void OnCollisionEnter(Collision other) 
     {
-        //if(isThrowable && other.gameObject.CompareTag("zemin"))
-        //{
-        //    Destroy(GetComponent<Rigidbody>());
-        //}    
+        if(!IsGatherable  && isStopable && other.gameObject.CompareTag("zemin") && GetComponent<Rigidbody>().velocity.y <=0.01f)
+        {
+            Debug.Log("a");
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;     
+            isGatherable = true;   
+        }    
     }
 }
