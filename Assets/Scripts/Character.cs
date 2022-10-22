@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (!other.TryGetComponent<Collectable>(out Collectable c))
+        if (!other.TryGetComponent<Trash>(out Trash t))
         {
             return;
         }

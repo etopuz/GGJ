@@ -2,42 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour
+public class ParabolicFire : MonoBehaviour
 {
     [SerializeField] GameObject trash;
     [SerializeField] float throwWaitMax = 2f;
-    Stack<GameObject> collectedThrashes;
     float throwWait = 0f;
     Ray ray;
     RaycastHit hit;
     Camera cam;
-    
-
 
     void Start()
     {
         cam = Camera.main;
-        collectedThrashes = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().CollectedThrashes;
     }
 
     void Update()
     {
         throwWait += Time.deltaTime;
-
-        if(collectedThrashes.Count == 0)
-        {
-            return;
-        }
-
-        if(!Input.GetMouseButtonDown(0))
-        {
-            return;
-        }
-
         ray = cam.ScreenPointToRay(Input.mousePosition);
         if(throwWait > throwWaitMax && Physics.Raycast(ray, out hit))
-        {        
-            collectedThrashes.Pop();
+        {
             throwWait = 0;
             GameObject firlat = Instantiate(trash, transform.position, Quaternion.identity);
             ShootWithGravity(firlat, hit.point);
