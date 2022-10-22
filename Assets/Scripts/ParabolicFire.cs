@@ -20,8 +20,9 @@ public class ParabolicFire : MonoBehaviour
     {
         throwWait += Time.deltaTime;
         ray = cam.ScreenPointToRay(Input.mousePosition);
-        if(throwWait > throwWaitMax && Physics.Raycast(ray, out hit))
+        if(throwWait > throwWaitMax && Physics.Raycast(ray, out hit, float.PositiveInfinity, LayerMask.GetMask("zemin")))
         {
+            Debug.Log(hit.collider.gameObject.layer);
             throwWait = 0;
             GameObject firlat = Instantiate(trash, transform.position, Quaternion.identity);
             ShootWithGravity(firlat, hit.point);

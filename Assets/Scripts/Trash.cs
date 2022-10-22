@@ -13,12 +13,12 @@ public class Trash : MonoBehaviour
     }
 
     [SerializeField] TrashType tt;
-    bool isThrowable = false;
+    bool isGatherable = true;
 
-    public bool IsThrowable
+    public bool IsGatherable
     {
-        get=> isThrowable;
-        set=> isThrowable = value;
+        get=> isGatherable;
+        set=> isGatherable = value;
     }
 
     public TrashType TType

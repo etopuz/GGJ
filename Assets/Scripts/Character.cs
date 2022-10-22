@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (!other.TryGetComponent<Trash>(out Trash t))
+        if (!other.TryGetComponent<Trash>(out Trash t) || !t.IsGatherable)
         {
             return;
         }
@@ -46,6 +46,7 @@ public class Character : MonoBehaviour
 
         if((transform.position - other.transform.position).sqrMagnitude < closeEnough)
         {
+            other.GetComponent<Trash>().IsGatherable = false;
             collectedThrashes.Push(other.gameObject);
             Destroy(other.gameObject);
         }        
