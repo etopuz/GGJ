@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileFire : MonoBehaviour
 {
-    [SerializeField] GameObject[] trashes;
+    GameObject[] trashes;
     [SerializeField] float throwWaitMax = 2f;
     [SerializeField] float throwSpeed = 2f;
     float throwWait = 0f;
@@ -13,6 +13,19 @@ public class ProjectileFire : MonoBehaviour
     Camera cam;
     Stack<GameObject> collectedThrashes = null;
     bool isBoss = true;
+
+    void Awake()
+    {
+        //Load text from a JSON file (Assets/Resources/Text/jsonFile01.json)
+        var allTrashParent = Resources.Load<GameObject>("AllTrashParent");
+        var allTrashParentTf = allTrashParent.transform;
+        int childCount = allTrashParentTf.childCount;
+        trashes = new GameObject[childCount];
+        for (int i = 0; i < childCount; i++)
+        {
+            trashes[i] = allTrashParentTf.GetChild(i).gameObject;
+        }
+    }
 
     void Start()
     {
@@ -67,8 +80,10 @@ public class ProjectileFire : MonoBehaviour
                 gObj.GetComponent<Rigidbody>().useGravity = false;
                 throwWait = 0;
                 gObj.transform.position = transform.position;
-                gObj.GetComponent<Trash>().IsGatherable = false;
-                gObj.GetComponent<Trash>().IsStopable = false;
+                var trashComp = gObj.GetComponent<Trash>();
+                trashComp.IsGatherable = false;
+                trashComp.IsStopable = false;
+                trashComp.CanMakePoisonousArea = false;
                 ShootWithVelocity(gObj, hit.point);   
             }
         }

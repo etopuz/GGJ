@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParabolicFire : MonoBehaviour
 {
-    [SerializeField] GameObject[] trashes;
+    GameObject[] trashes;
     [SerializeField] float throwWaitMax = 2f;
     float throwWait = 0f;
     Ray ray;
@@ -12,6 +12,19 @@ public class ParabolicFire : MonoBehaviour
     Camera cam;
     Stack<GameObject> collectedThrashes = null;
     bool isBoss = true;
+
+    void Awake() 
+    {
+        //Load text from a JSON file (Assets/Resources/Text/jsonFile01.json)
+        var allTrashParent = Resources.Load<GameObject>("AllTrashParent");
+        var allTrashParentTf = allTrashParent.transform;
+        int childCount = allTrashParentTf.childCount;
+        trashes = new GameObject[childCount];
+        for (int i = 0; i < childCount; i++)
+        {
+            trashes[i] =allTrashParentTf.GetChild(i).gameObject;
+        }
+    }
 
     void Start()
     {
@@ -66,7 +79,9 @@ public class ParabolicFire : MonoBehaviour
                 gObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
                 throwWait = 0;
                 gObj.transform.position = transform.position;
-                gObj.GetComponent<Trash>().IsGatherable = false;
+                var trashComp = gObj.GetComponent<Trash>();
+                trashComp.IsGatherable = false;
+                trashComp.CanMakePoisonousArea = false;
                 Shoot(gObj, hit.point);
             }
         }

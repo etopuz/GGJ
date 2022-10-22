@@ -13,15 +13,26 @@ public class Trash : MonoBehaviour
     }
 
     [SerializeField] TrashType tt;
-    [SerializeField] static float maxWaitTime;
-     bool isGatherable = true;
-     bool isStopable = true;    
-     float waitTime = 0;
+    static float maxWaitTime = 5f;
+    
+    static GameObject poisonousArea;
+
+    bool isGatherable = true;
+    bool isStopable = true;    
+    bool canMakePoisonousArea = true;
+    float waitTime = 0;
+    
 
     public bool IsGatherable
     {
         get=> isGatherable;
         set=> isGatherable = value;
+    }
+
+    public bool CanMakePoisonousArea
+    {
+        get => canMakePoisonousArea;
+        set => canMakePoisonousArea = value;
     }
 
     public bool IsStopable
@@ -33,6 +44,10 @@ public class Trash : MonoBehaviour
     public TrashType TType
     {
         get => tt;
+    }
+
+    private void Awake() {
+        poisonousArea = Resources.Load<GameObject>("PoisonousArea");
     }
 
     void OnCollisionEnter(Collision other) 
@@ -66,10 +81,12 @@ public class Trash : MonoBehaviour
     void OnCollisionStay(Collision other)
     {
         waitTime+= Time.deltaTime;
-        if(waitTime > maxWaitTime)
+        if(canMakePoisonousArea&& waitTime > maxWaitTime)
         {
+            canMakePoisonousArea = false;
             waitTime = 0;
-            //YERDE ZARARLI BÖLGE OLUŞTURMA
+            Instantiate(poisonousArea,  new Vector3(transform.position.x, 0.01f, transform.position.z) ,poisonousArea.transform.rotation);
+            Destroy(gameObject);
         }
     }
 }
