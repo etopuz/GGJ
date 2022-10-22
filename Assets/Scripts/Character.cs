@@ -7,6 +7,13 @@ public class Character : MonoBehaviour
     [SerializeField] float playerSpeed = 10f;
     [SerializeField] float trashMagnetSpeed = 10f;
     [SerializeField] float closeEnough = 1f;
+    [SerializeField] float health = 100f;
+
+    public float Health
+    {
+        get => health;
+        set => health = value;
+    }
 
     private Stack<GameObject> collectedThrashes = new Stack<GameObject>();
     private Rigidbody rb;
@@ -25,6 +32,10 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+        if (health <= 0)
+        {
+            Debug.Log("SEN ÖLDÜN");
+        }
         float directionX = Input.GetAxisRaw("Horizontal");
         float directionY = Input.GetAxisRaw("Vertical");
         playerDirection = new Vector2(directionX,directionY).normalized;

@@ -16,6 +16,8 @@ public class Trash : MonoBehaviour
     static float maxWaitTime = 5f;
     
     static GameObject poisonousArea;
+    static Character character;
+    static Boss boss;
 
     bool isGatherable = true;
     bool isStopable = true;    
@@ -48,6 +50,8 @@ public class Trash : MonoBehaviour
 
     private void Awake() {
         poisonousArea = Resources.Load<GameObject>("PoisonousArea");
+        boss = GameObject.FindObjectOfType<Boss>();
+        character = GameObject.FindObjectOfType<Character>();
     }
 
     void OnCollisionEnter(Collision other) 
@@ -62,6 +66,7 @@ public class Trash : MonoBehaviour
         {
             Destroy(gameObject);
             //SUYA DÜŞME VE SENİN CAN AZALMA
+            character.Health -=10;
         }
 
         if(other.gameObject.TryGetComponent<TrashCan>(out TrashCan tc))
@@ -70,10 +75,12 @@ public class Trash : MonoBehaviour
             {
                 Destroy(gameObject);
                 //DÜŞMAN CAN AZALTMA
+                boss.Health -= 10;
             }
             else
             {
                 //SENİN CANIN AZALSIN
+                character.Health -= 10;
             }
         }
     }

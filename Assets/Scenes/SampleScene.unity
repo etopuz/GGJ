@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 190758765}
   - component: {fileID: 190758760}
   - component: {fileID: 190758759}
+  - component: {fileID: 190758766}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -429,6 +430,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwWaitMax: 2
+--- !u!114 &190758766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190758757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f29d8e13c2b16349b450c376bfb0dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &275130326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1583,7 @@ MonoBehaviour:
   playerSpeed: 10
   trashMagnetSpeed: 10
   closeEnough: 1
+  health: 100
 --- !u!54 &1119644908
 Rigidbody:
   m_ObjectHideFlags: 0
