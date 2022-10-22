@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6272013072691307590
 Transform:
   m_ObjectHideFlags: 0
@@ -84,6 +84,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 677012042551924337, guid: 9437223e9b8b07d448dd34a6d0850ff3, type: 3}
+      propertyPath: m_Size.x
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 677012042551924337, guid: 9437223e9b8b07d448dd34a6d0850ff3, type: 3}
+      propertyPath: m_Size.y
+      value: 3.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 677012042551924337, guid: 9437223e9b8b07d448dd34a6d0850ff3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2119066762, guid: a8f205e69ccebe84a8a6d1e71e6ba84c, type: 3}
+    - target: {fileID: 677012042551924337, guid: 9437223e9b8b07d448dd34a6d0850ff3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 677012042551924342, guid: 9437223e9b8b07d448dd34a6d0850ff3, type: 3}
       propertyPath: m_Name
       value: cam
@@ -145,6 +161,22 @@ PrefabInstance:
     - target: {fileID: 677012042551924336, guid: c68d997c3c7f7ee41aed3a973583df81, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 677012042551924337, guid: c68d997c3c7f7ee41aed3a973583df81, type: 3}
+      propertyPath: m_Size.x
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 677012042551924337, guid: c68d997c3c7f7ee41aed3a973583df81, type: 3}
+      propertyPath: m_Size.y
+      value: 3.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 677012042551924337, guid: c68d997c3c7f7ee41aed3a973583df81, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2119066762, guid: a8f205e69ccebe84a8a6d1e71e6ba84c, type: 3}
+    - target: {fileID: 677012042551924337, guid: c68d997c3c7f7ee41aed3a973583df81, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 677012042551924342, guid: c68d997c3c7f7ee41aed3a973583df81, type: 3}
       propertyPath: m_Name

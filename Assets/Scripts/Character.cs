@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Character : MonoBehaviour
     [SerializeField] float trashMagnetSpeed = 10f;
     [SerializeField] float closeEnough = 1f;
     [SerializeField] float health = 100f;
+    [SerializeField] Image holdedTrashImage;
 
     public float Health
     {
@@ -39,6 +41,34 @@ public class Character : MonoBehaviour
         float directionX = Input.GetAxisRaw("Horizontal");
         float directionY = Input.GetAxisRaw("Vertical");
         playerDirection = new Vector2(directionX,directionY).normalized;
+
+        if(collectedThrashes.TryPeek(out GameObject gObj))
+        {
+            var col = holdedTrashImage.color;
+            holdedTrashImage.color = new Color(col.r,col.g,col.b,1);
+            holdedTrashImage.sprite = gObj.GetComponent<SpriteRenderer>().sprite;
+            holdedTrashImage.SetNativeSize();
+
+            var size = holdedTrashImage.rectTransform.sizeDelta;
+            float smallFactor = 0;
+            if (size.x > size.y)
+            {
+                smallFactor = size.x / 50; //width of recttrasnform
+            }
+            else
+            {
+                smallFactor = size.y / 50;
+            }
+
+            holdedTrashImage.rectTransform.sizeDelta /= smallFactor;
+        }
+        else
+        {
+            var col = holdedTrashImage.color;
+            holdedTrashImage.color = new Color(col.r, col.g, col.b, 0);
+        }
+
+
     }
 
     void FixedUpdate() 
@@ -60,7 +90,7 @@ public class Character : MonoBehaviour
             other.GetComponent<Trash>().IsGatherable = false;
             other.GetComponent<Trash>().IsStopable = false;
             collectedThrashes.Push(other.gameObject);
-            other.gameObject.SetActive(false);  
+            other.gameObject.SetActive(false);            
         }        
     }
 }
