@@ -44,6 +44,12 @@ public class Character : MonoBehaviour
         float directionX = Input.GetAxisRaw("Horizontal");
         float directionY = Input.GetAxisRaw("Vertical");
         anim.SetFloat("moveX", directionX);
+        if(directionX <0 ){
+            anim.SetBool("mirror",true);
+        }
+        else{
+            anim.SetBool("mirror", false);
+        }
         anim.SetFloat("moveY", directionY);
         playerDirection = new Vector2(directionX,directionY);
 
