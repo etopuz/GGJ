@@ -11,6 +11,8 @@ public class Character : MonoBehaviour
     [SerializeField] float closeEnough = 1f;
     [SerializeField] float health = 100f;
     [SerializeField] Image holdedTrashImage;
+    [SerializeField] GameManager gameManager;
+
     Animator anim;
 
     public float Health
@@ -33,12 +35,15 @@ public class Character : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        gameManager = GameManager.instance;
+        gameManager.OnStartGame += SetHealthFull;
     }
 
     void Update()
     {
         if (health <= 0)
         {
+            gameManager.state = GameState.Failed;
             Debug.Log("SEN ÖLDÜN");
         }
         float directionX = Input.GetAxisRaw("Horizontal");
@@ -123,5 +128,11 @@ public class Character : MonoBehaviour
             collectedThrashes.Push(other.gameObject);
             other.gameObject.SetActive(false);            
         }        
+    }
+
+
+    private void SetHealthFull()
+    {
+        health = 100;
     }
 }

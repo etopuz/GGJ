@@ -12,6 +12,7 @@ public class Trash : MonoBehaviour
         Metal        
     }
 
+    [SerializeField] private Transform thrashParent;
     [SerializeField] TrashType tt;
     static float maxWaitTime = 5f;
     static float poisonPerSecond = 2f;
@@ -53,6 +54,7 @@ public class Trash : MonoBehaviour
         poisonousArea = Resources.Load<GameObject>("PoisonousArea");
         boss = GameObject.FindObjectOfType<Boss>();
         character = GameObject.FindObjectOfType<Character>();
+        thrashParent = GameObject.FindGameObjectWithTag("thrashContainer").transform;
     }
 
     void OnCollisionEnter(Collision other) 
@@ -76,13 +78,13 @@ public class Trash : MonoBehaviour
             {
                 Destroy(gameObject);
                 //DÜŞMAN CAN AZALTMA
-                boss.Health -= 10;
+                boss.Health -= 100;
             }
             else
             {
                 Destroy(gameObject);
                 //SENİN CANIN AZALSIN
-                character.Health -= 10;
+                character.Health -= 100;
             }
         }
     }
@@ -95,7 +97,7 @@ public class Trash : MonoBehaviour
             character.Health -= poisonPerSecond/50;
             canMakePoisonousArea = false;
             waitTime = 0;
-            Instantiate(poisonousArea,  new Vector3(transform.position.x, -0.3f, transform.position.z) ,poisonousArea.transform.rotation);
+            Instantiate(poisonousArea,  new Vector3(transform.position.x, -0.3f, transform.position.z) ,poisonousArea.transform.rotation, thrashParent);
             Destroy(gameObject);
         }
     }

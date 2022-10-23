@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public GameState state;
     public event Action<bool> OnPauseStateChange;
+    public event Action OnStartGame;
     public event Action OnExitFromOtherMenus;
+    private Transform thrashContainer;
+
 
     private void Start()
     {
         state = GameState.NotStarted;
         Time.timeScale = 0f;
+        thrashContainer = GameObject.FindGameObjectWithTag("thrashContainer").transform;
     }
 
     private void Update()
@@ -55,6 +59,21 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         state = GameState.Playing;
         OnPauseStateChange?.Invoke(false);
+        OnStartGame?.Invoke();
+        RemoveThrashes();
+    }
+
+    private void RemoveThrashes()
+    {
+        foreach (Transform child in thrashContainer)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
+    public void StopTime()
+    {
+        Time.timeScale = 0f;
     }
 
     public void PauseGame()
@@ -72,7 +91,6 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        ReloadScene();
         StartGame();
     }
 
@@ -81,6 +99,7 @@ public class GameManager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
+
 }
 
 [System.Serializable]
@@ -90,5 +109,5 @@ public enum GameState
     Playing,
     Paused,
     Failed,
-    Succes
+    Win
 }

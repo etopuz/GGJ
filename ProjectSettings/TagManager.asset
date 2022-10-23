@@ -6,6 +6,8 @@ TagManager:
   tags:
   - zemin
   - duvar
+  - boss
+  - thrashContainer
   layers:
   - Default
   - TransparentFX

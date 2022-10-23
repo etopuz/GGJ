@@ -13,7 +13,7 @@ public class ParabolicFire : MonoBehaviour
     Camera cam;
     Stack<GameObject> collectedThrashes = null;
     bool isBoss = true;
-
+    [SerializeField] private Transform thrashParent;
     void Awake() 
     {
         //Load text from a JSON file (Assets/Resources/Text/jsonFile01.json)
@@ -58,7 +58,7 @@ public class ParabolicFire : MonoBehaviour
         {
             GameObject trash = trashes[Random.Range(0, trashes.Length)];
             throwWait = 0;
-            GameObject firlat = Instantiate(trash, transform.position, trash.transform.rotation);
+            GameObject firlat = Instantiate(trash, transform.position, trash.transform.rotation, thrashParent);
             firlat.GetComponent<Trash>().IsGatherable = false;
             Shoot(firlat, new Vector3(Random.Range(-maxSinir, maxSinir), 0, Random.Range(-maxSinir, maxSinir)));
         }

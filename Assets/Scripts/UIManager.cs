@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,13 +16,38 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject inGameMenu;
-    [SerializeField] private GameObject restartMenu;
+    [SerializeField] private GameObject failMenu;
+    [SerializeField] private GameObject winMenu;
+
+    [Header("BossHealth")]
+    [SerializeField] private Image bossHealthBar;
+    private Boss boss;
 
     private void Start()
     {
         currentMenu = mainMenu;
         gameManager.OnPauseStateChange += UpdateUIOnPause;
         gameManager.OnExitFromOtherMenus += OpenMainMenu;
+        boss = GameObject.FindGameObjectWithTag("boss").GetComponent<Boss>();
+    }
+
+    private void Update()
+    {
+        UpdateBossHealthBar();
+        CheckWin();
+    }
+
+    private void CheckWin()
+    {
+        if(gameManager.state == GameState.Win)
+        {
+            OpenWinMenu();
+        }
+
+        else if (gameManager.state == GameState.Failed)
+        {
+            OpenFailMenu();
+        }
     }
 
     public void OpenCredits()
@@ -49,9 +76,16 @@ public class UIManager : MonoBehaviour
         ChangeMenu(pauseMenu);
     }
 
-    private void OpenRestartMenu()
+    private void OpenFailMenu()
     {
-        ChangeMenu(restartMenu);
+        ChangeMenu(failMenu);
+        gameManager.StopTime();
+    }
+
+    private void OpenWinMenu()
+    {
+        ChangeMenu(winMenu);
+        gameManager.StopTime();
     }
 
     public void UpdateUIOnPause(bool pause)
@@ -81,5 +115,10 @@ public class UIManager : MonoBehaviour
             newMenu.SetActive(true);
             currentMenu = newMenu;
         }
+    }
+
+    private void UpdateBossHealthBar()
+    {
+        bossHealthBar.fillAmount = boss.Health / 100;
     }
 }

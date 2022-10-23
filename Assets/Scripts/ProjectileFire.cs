@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileFire : MonoBehaviour
 {
     GameObject[] trashes;
+    [SerializeField] private Transform thrashParent;
     [SerializeField] float throwWaitMax = 2f;
     [SerializeField] float throwSpeed = 2f;
     float throwWait = 0f;
@@ -96,7 +97,7 @@ public class ProjectileFire : MonoBehaviour
         {
             GameObject trash = trashes[Random.Range(0, trashes.Length)];
             throwWait = 0;
-            GameObject firlat = Instantiate(trash, transform.position, trash.transform.rotation);
+            GameObject firlat = Instantiate(trash, transform.position, trash.transform.rotation, thrashParent);
             firlat.GetComponent<Trash>().IsGatherable = false;
             ShootWithVelocity(firlat, new Vector3(Random.Range(-20f,20f),0,Random.Range(-20f, 20f)));
         }
