@@ -22,4 +22,8 @@ public class AudioManager : MonoBehaviour
         audioData.loop = true;
         audioData.Play();
     }
+
+    public void StopSound(){
+        audioData.Stop();
+    }
 }

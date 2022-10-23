@@ -21,7 +21,9 @@ public class UIManager : MonoBehaviour
 
     [Header("BossHealth")]
     [SerializeField] private Image bossHealthBar;
+    [SerializeField] private Image charHealthBar;
     private Boss boss;
+    private Character character;
 
     private void Start()
     {
@@ -29,11 +31,13 @@ public class UIManager : MonoBehaviour
         gameManager.OnPauseStateChange += UpdateUIOnPause;
         gameManager.OnExitFromOtherMenus += OpenMainMenu;
         boss = GameObject.FindGameObjectWithTag("boss").GetComponent<Boss>();
+        character = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
     }
 
     private void Update()
     {
         UpdateBossHealthBar();
+        UpdateCharHealthBar();
         CheckWin();
     }
 
@@ -119,6 +123,11 @@ public class UIManager : MonoBehaviour
 
     private void UpdateBossHealthBar()
     {
-        bossHealthBar.fillAmount = boss.Health / 100;
+        bossHealthBar.fillAmount = boss.Health / 100 +0.1f;
+    }
+
+    private void UpdateCharHealthBar()
+    {
+        charHealthBar.fillAmount = character.Health / 100 + 0.1f;
     }
 }

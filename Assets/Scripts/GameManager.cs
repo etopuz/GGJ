@@ -63,6 +63,7 @@ public class GameManager : Singleton<GameManager>
         OnPauseStateChange?.Invoke(false);
         OnStartGame?.Invoke();
         RemoveThrashes();
+        Camera.main.GetComponent<AudioManager>().GameStart();
     }
 
     private void RemoveThrashes()
