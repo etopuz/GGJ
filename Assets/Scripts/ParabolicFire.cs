@@ -63,6 +63,11 @@ public class ParabolicFire : MonoBehaviour
             Shoot(firlat, new Vector3(Random.Range(-maxSinir, maxSinir), 0, Random.Range(-maxSinir, maxSinir)));
         }
 
+        if(throwWaitMax>1f){
+            throwWaitMax -= 0.2f;
+        }
+        
+
     }
 
     void PlayerShoot()

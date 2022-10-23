@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Poisonous : MonoBehaviour
 {
+
     private void OnTriggerStay(Collider other) 
     {
+        if(other is SphereCollider){
+            return;
+        }
+
         if(other.TryGetComponent<Character>(out Character c))
         {
             Debug.Log(other.gameObject.name);
 
-            //can azaltmaa
+            c.Health -= 2/60;
         }        
     }    
 }

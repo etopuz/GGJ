@@ -17758,6 +17758,7 @@ GameObject:
   - component: {fileID: 1119644911}
   - component: {fileID: 1119644913}
   - component: {fileID: 1119644914}
+  - component: {fileID: 1119644915}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -17913,6 +17914,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1119644915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119644902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.318483, y: 9.358311, z: 1}
+  m_Center: {x: -0.38187468, y: 0.45206493, z: 0.00000006119996}
 --- !u!1 &1122947967
 GameObject:
   m_ObjectHideFlags: 0
@@ -22229,7 +22243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421963287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.5}
+  m_LocalPosition: {x: 0, y: 0, z: -1.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

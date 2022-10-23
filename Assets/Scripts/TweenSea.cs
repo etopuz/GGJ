@@ -12,7 +12,7 @@ public class TweenSea : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount-1; i++)
         {
-            transform.GetChild(i).DOScaleY(Random.Range(1.1f,1.2f),Random.Range(1,4)).SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
+            transform.GetChild(i).DOScaleY(transform.GetChild(i).localScale.y* Random.Range(1.1f,1.2f),Random.Range(1,4)).SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
         }
     }
 }

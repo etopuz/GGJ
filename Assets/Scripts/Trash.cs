@@ -95,7 +95,7 @@ public class Trash : MonoBehaviour
             character.Health -= poisonPerSecond/50;
             canMakePoisonousArea = false;
             waitTime = 0;
-            Instantiate(poisonousArea,  new Vector3(transform.position.x, 0.01f, transform.position.z) ,poisonousArea.transform.rotation);
+            Instantiate(poisonousArea,  new Vector3(transform.position.x, -0.3f, transform.position.z) ,poisonousArea.transform.rotation);
             Destroy(gameObject);
         }
     }
