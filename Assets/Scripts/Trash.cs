@@ -78,13 +78,13 @@ public class Trash : MonoBehaviour
             {
                 Destroy(gameObject);
                 //DÜŞMAN CAN AZALTMA
-                boss.Health -= 100;
+                boss.Health -= 10;
             }
             else
             {
                 Destroy(gameObject);
                 //SENİN CANIN AZALSIN
-                character.Health -= 100;
+                character.Health -= 10;
             }
         }
     }
