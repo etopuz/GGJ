@@ -38,12 +38,14 @@ public class GameManager : Singleton<GameManager>
         else if(state == GameState.Playing)
         {
             state = GameState.Paused;
+            Time.timeScale = 0f;
             OnPauseStateChange?.Invoke(state == GameState.Paused);
         }
 
         else if (state == GameState.Paused)
         {
             state = GameState.Playing;
+            Time.timeScale = 1f;
             OnPauseStateChange?.Invoke(state == GameState.Paused);
         }
     }
