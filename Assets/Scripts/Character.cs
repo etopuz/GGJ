@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     [SerializeField] float closeEnough = 1f;
     [SerializeField] float health = 100f;
     [SerializeField] Image holdedTrashImage;
+    Animator anim;
 
     public float Health
     {
@@ -31,6 +32,7 @@ public class Character : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -41,6 +43,8 @@ public class Character : MonoBehaviour
         }
         float directionX = Input.GetAxisRaw("Horizontal");
         float directionY = Input.GetAxisRaw("Vertical");
+        anim.SetFloat("moveX", directionX);
+        anim.SetFloat("moveY", directionY);
         playerDirection = new Vector2(directionX,directionY);
 
         if(collectedThrashes.TryPeek(out GameObject gObj))
