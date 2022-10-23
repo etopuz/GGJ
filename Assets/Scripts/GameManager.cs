@@ -2,31 +2,46 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool isPaused;
-    private bool isDead;
-    public event Action<bool,bool> OnStateChange;
+    public GameState state;
+    public event Action<bool> OnPauseStateChange;
+    public event Action OnExitFromOtherMenus;
 
     private void Start()
     {
-        isPaused = true;
-        isDead = false;
+        state = GameState.NotStarted;
+        Time.timeScale = 0f;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || isDead)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ChangeState();
+            OnPausePressed();
         }
     }
 
-    private void ChangeState()
+    private void OnPausePressed()
     {
-        isPaused = !isPaused;
-        OnStateChange?.Invoke(isPaused, isDead);
+        if(state == GameState.NotStarted)
+        {
+            OnExitFromOtherMenus?.Invoke();
+        }
+
+        else if(state == GameState.Playing)
+        {
+            state = GameState.Paused;
+            OnPauseStateChange?.Invoke(state == GameState.Paused);
+        }
+
+        else if (state == GameState.Paused)
+        {
+            state = GameState.Playing;
+            OnPauseStateChange?.Invoke(state == GameState.Paused);
+        }
     }
 
 
@@ -37,19 +52,43 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        ResumeGame();
+        Time.timeScale = 1f;
+        state = GameState.Playing;
+        OnPauseStateChange?.Invoke(false);
     }
 
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        state = GameState.Paused;
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        ChangeState();
+        state = GameState.Playing;
+        OnPauseStateChange?.Invoke(state == GameState.Paused);
     }
 
+    public void RestartGame()
+    {
+        ReloadScene();
+        StartGame();
+    }
 
+    public void ReloadScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+}
+
+[System.Serializable]
+public enum GameState
+{
+    NotStarted,
+    Playing,
+    Paused,
+    Failed,
+    Succes
 }

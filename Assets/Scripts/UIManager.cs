@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameObject currentMenu;
+
+    [Header("Menus")]
     [SerializeField] private GameObject creditsMenu;
     [SerializeField] private GameObject howToPlayMenu;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject inGameMenu;
     [SerializeField] private GameObject restartMenu;
 
-    [SerializeField] private GameManager gameManager;
-
-    private GameObject currentMenu;
     private void Start()
     {
         currentMenu = mainMenu;
-        gameManager.OnStateChange += HandleMenus;
+        gameManager.OnPauseStateChange += UpdateUIOnPause;
+        gameManager.OnExitFromOtherMenus += OpenMainMenu;
     }
 
     public void OpenCredits()
@@ -32,6 +36,12 @@ public class UIManager : MonoBehaviour
     public void OpenMainMenu()
     {
         ChangeMenu(mainMenu);
+        gameManager.ReloadScene();
+    }
+
+    public void OpenInGameMenu()
+    {
+        ChangeMenu(inGameMenu);
     }
 
     public void OpenPauseMenu()
@@ -44,26 +54,22 @@ public class UIManager : MonoBehaviour
         ChangeMenu(restartMenu);
     }
 
-    public void HandleMenus(bool pause, bool dead)
+    public void UpdateUIOnPause(bool pause)
     {
-        if (dead)
+        if (pause)
         {
-            OpenRestartMenu();
-            return;
+            OpenPauseMenu();
         }
 
-        currentMenu.SetActive(pause);
-
-        if (!pause)
+        else
         {
-            currentMenu = pauseMenu;
+            OpenInGameMenu();
         }
-        
     }
 
     private void ChangeMenu(GameObject newMenu)
     {
-        if(currentMenu == null)
+        if (currentMenu == null)
         {
             currentMenu = newMenu;
             newMenu.SetActive(true);
@@ -75,7 +81,5 @@ public class UIManager : MonoBehaviour
             newMenu.SetActive(true);
             currentMenu = newMenu;
         }
-
     }
-
 }
